@@ -1,0 +1,30 @@
+{
+  "name": "vjoy",
+  "version": "1.0.0",
+  "description": "Native Node bindings for the vjoy virtual joystick driver",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jangxx/node-vjoy.git"
+  },
+  "keywords": [
+    "vjoy",
+    "bindings",
+    "native"
+  ],
+  "author": "jangxx <jangxx@protonmail.com>",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/jangxx/node-vjoy/issues"
+  },
+  "homepage": "https://github.com/jangxx/node-vjoy#readme",
+  "dependencies": {}
+}
