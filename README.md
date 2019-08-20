@@ -20,7 +20,7 @@ npm install -g windows-build-tools
 A minimal example of a feeder application looks like this:
 
 ```javascript
-const { vJoy, vJoydevice } = require('vjoy');
+const { vJoy, vJoyDevice } = require('vjoy');
 
 if (!vJoy.isEnabled()) {
 	console.log("vJoy is not enabled.");
@@ -74,7 +74,7 @@ A static array of the names of the axes. Contains: `[ "X", "Y", "Z", "Rx", "Ry",
 ## vJoyDevice
 
 This is the class abstracting the vJoy SDK into an easy-to-use library.
-It is recommended to not instantiate this class directly and use `vJoyDevice.create(derviceId)`, which takes care of all the initialization, instead.
+It is recommended to not instantiate this class directly and use `vJoyDevice.create(deviceId)`, which takes care of all the initialization, instead.
 
 **vJoyDevice.create**(id)  
 Creates and initializes a new `vJoyDevice`. Returns the new device if the initialization was successful and `null` otherwise.
