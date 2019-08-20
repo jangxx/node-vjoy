@@ -1,3 +1,7 @@
 const vjoy = require('./build/Release/vjoy');
 
-console.log(vjoy.vjoy_enabled());
+console.log(vjoy);
+
+for (let key in vjoy) {
+	console.log(key, vjoy[key]())
+}

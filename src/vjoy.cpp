@@ -1,32 +1,26 @@
 #include <node_api.h>
 #include "../include/stdafx.h"
 #include "../include/public.h"
-#include <malloc.h>
-#include <string.h>
-#include <stdlib.h>
 #include "../include/vjoyinterface.h"
 
-napi_value vjoy_enabled(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+#include "general.h"
 
-	bool enabled = vJoyEnabled();
-
-	status = napi_get_boolean(env, true, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
-}
+// macro to create a JS function object and attach it to the exports object. Only works in the init function.
+#define NAPI_FUNC(fn_name, exported_name) napi_value fn_##fn_name; \
+                           status = napi_create_function(env, nullptr, 0, fn_name, nullptr, &fn_##fn_name); if (status != napi_ok) return nullptr; \
+                           status = napi_set_named_property(env, exports, exported_name, fn_##fn_name); if (status != napi_ok) return nullptr;
 
 napi_value init(napi_env env, napi_value exports) {
 	napi_status status;
-	napi_value fn_vjoy_enabled;
 
-	status = napi_create_function(env, nullptr, 0, vjoy_enabled, nullptr, &fn_vjoy_enabled);
-	if (status != napi_ok) return nullptr;
-
-	status = napi_set_named_property(env, exports, "vjoy_enabled", fn_vjoy_enabled);
-	if (status != napi_ok) return nullptr;
+	NAPI_FUNC(wrap_vJoyEnabled, "vJoyEnabled")
+	NAPI_FUNC(wrap_GetvJoyVersion, "GetvJoyVersion")
+	NAPI_FUNC(wrap_GetvJoyProductString, "GetvJoyProductString")
+	NAPI_FUNC(wrap_GetvJoyManufacturerString, "GetvJoyManufacturerString")
+	NAPI_FUNC(wrap_GetvJoySerialNumberString, "GetvJoySerialNumberString")
+	NAPI_FUNC(wrap_DriverMatch, "DriverMatch")
+	NAPI_FUNC(wrap_GetvJoyMaxDevices, "GetvJoyMaxDevices")
+	NAPI_FUNC(wrap_GetNumberExistingVJD, "GetNumberExistingVJD")
 
 	return exports;
 }

@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "node-gyp rebuild"
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
     "url": "https://github.com/jangxx/node-vjoy/issues"
   },
   "homepage": "https://github.com/jangxx/node-vjoy#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "engines": { "node": ">=8.0.0" },
+  "os": [ "win32" ],
+  "cpu": [ "x64", "ia32" ]
 }

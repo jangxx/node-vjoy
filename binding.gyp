@@ -2,7 +2,7 @@
 	"targets": [
 		{
 			"target_name": "vjoy",
-			"sources": [ "src/vjoy.cpp" ],
+			"sources": [ "src/vjoy.cpp", "src/general.cpp" ],
 			"include_dirs": [
 				"<(module_root_dir)/include",
 			],
