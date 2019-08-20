@@ -7,7 +7,7 @@ if (process.argv.length > 2) {
 }
 
 if (!vJoy.isEnabled()) {
-	console.log("vJoy is not enabled.")
+	console.log("vJoy is not enabled.");
 	process.exit();
 }
 
