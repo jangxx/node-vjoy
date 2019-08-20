@@ -2,7 +2,13 @@
 	"targets": [
 		{
 			"target_name": "vjoy",
-			"sources": [ "src/vjoy.cpp", "src/general.cpp" ],
+			"sources": [ 
+				"src/utils.cpp", 
+				"src/general.cpp", 
+				"src/device.cpp", 
+				"src/feeding.cpp", 
+				"src/vjoy.cpp" 
+			],
 			"include_dirs": [
 				"<(module_root_dir)/include",
 				"<!@(node -p \"require('node-addon-api').include\")"

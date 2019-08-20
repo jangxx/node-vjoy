@@ -93,3 +93,34 @@ Napi::Number wrap_GetNumberExistingVJD(const Napi::CallbackInfo& info) {
 
 	return Napi::Number::New(env, (double)existingVJD);
 }
+
+// void ConfChangedCB(BOOL Removed, BOOL First, PVOID data) {
+// 	CallbackInfo* removalCBinfo = (CallbackInfo*)data;
+
+// 	Napi::Boolean val_removed = Napi::Boolean::New(removalCBinfo->env, Removed == TRUE);
+// 	Napi::Boolean val_first = Napi::Boolean::New(removalCBinfo->env, First == TRUE);
+
+// 	removalCBinfo->fn.Call(removalCBinfo->env.Global(), { val_removed, val_first });
+// }
+
+// // This function leaks memory if called more than once which is why it's not exposed to the users
+// void wrap_RegisterRemovalCB(const Napi::CallbackInfo& info) {
+// 	Napi::Env env = info.Env();
+
+// 	if (!info[0].IsFunction()) {
+// 		Napi::Error::New(env, "The first parameter needs to be a function").ThrowAsJavaScriptException();
+// 		return;
+// 	}
+
+// 	Napi::Function callback = info[0].As<Napi::Function>();
+
+// 	Napi::EscapableHandleScope scope = Napi::EscapableHandleScope(env);
+// 	scope.Escape(env);
+
+// 	CallbackInfo* removalCBinfo = new CallbackInfo();
+// 	removalCBinfo->fn = callback;
+// 	removalCBinfo->env = env;
+
+// 	RegisterRemovalCB(&ConfChangedCB, removalCBinfo);
+// }
+

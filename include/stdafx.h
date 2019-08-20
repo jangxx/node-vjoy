@@ -17,3 +17,4 @@
 #include <INITGUID.H>
 
 #include <string>
+#include <unordered_map>
