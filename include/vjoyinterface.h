@@ -161,10 +161,10 @@ enum FFB_CTRL
 {
 	CTRL_ENACT		= 1,	// Enable all device actuators.
 	CTRL_DISACT		= 2,	// Disable all the device actuators.
-	CTRL_STOPALL	= 3,	// Stop All Effects­ Issues a stop on every running effect.
-	CTRL_DEVRST		= 4,	// Device Reset– Clears any device paused condition, enables all actuators and clears all effects from memory.
-	CTRL_DEVPAUSE	= 5,	// Device Pause– The all effects on the device are paused at the current time step.
-	CTRL_DEVCONT	= 6,	// Device Continue– The all effects that running when the device was paused are restarted from their last time step.
+	CTRL_STOPALL	= 3,	// Stop All Effectsï¿½ Issues a stop on every running effect.
+	CTRL_DEVRST		= 4,	// Device Resetï¿½ Clears any device paused condition, enables all actuators and clears all effects from memory.
+	CTRL_DEVPAUSE	= 5,	// Device Pauseï¿½ The all effects on the device are paused at the current time step.
+	CTRL_DEVCONT	= 6,	// Device Continueï¿½ The all effects that running when the device was paused are restarted from their last time step.
 };
 
 enum FFB_EFFECTS {
@@ -208,10 +208,10 @@ typedef struct _FFB_EFF_REPORT {
 	WORD		SamplePrd;
 	BYTE		Gain;
 	BYTE		TrigerBtn;
-	BOOL		Polar; // How to interpret force direction Polar (0-360°) or Cartesian (X,Y)
+	BOOL		Polar; // How to interpret force direction Polar (0-360ï¿½) or Cartesian (X,Y)
 	union
 	{
-		BYTE	Direction; // Polar direction: (0x00-0xFF correspond to 0-360°)
+		BYTE	Direction; // Polar direction: (0x00-0xFF correspond to 0-360ï¿½)
 		BYTE	DirX; // X direction: Positive values are To the right of the center (X); Negative are Two's complement
 	};
 	BYTE		DirY; // Y direction: Positive values are below the center (Y); Negative are Two's complement
@@ -227,7 +227,7 @@ typedef struct _FFB_EFF_OP {
 typedef struct _FFB_EFF_PERIOD {
 	BYTE		EffectBlockIndex;
 	DWORD		Magnitude;			// Range: 0 - 10000
-	LONG 		Offset;				// Range: –10000 - 10000
+	LONG 		Offset;				// Range: ï¿½10000 - 10000
 	DWORD 		Phase;				// Range: 0 - 35999
 	DWORD 		Period;				// Range: 0 - 32767
 } FFB_EFF_PERIOD, *PFFB_EFF_PERIOD;
@@ -235,12 +235,12 @@ typedef struct _FFB_EFF_PERIOD {
 typedef struct _FFB_EFF_COND {
 	BYTE		EffectBlockIndex;
 	BOOL		isY;
-	LONG 		CenterPointOffset; // CP Offset:  Range -­10000 ­- 10000
-	LONG 		PosCoeff; // Positive Coefficient: Range -­10000 ­- 10000
-	LONG 		NegCoeff; // Negative Coefficient: Range -­10000 ­- 10000
-	DWORD 		PosSatur; // Positive Saturation: Range 0 – 10000
-	DWORD 		NegSatur; // Negative Saturation: Range 0 – 10000
-	LONG 		DeadBand; // Dead Band: : Range 0 – 1000
+	LONG 		CenterPointOffset; // CP Offset:  Range -ï¿½10000 ï¿½- 10000
+	LONG 		PosCoeff; // Positive Coefficient: Range -ï¿½10000 ï¿½- 10000
+	LONG 		NegCoeff; // Negative Coefficient: Range -ï¿½10000 ï¿½- 10000
+	DWORD 		PosSatur; // Positive Saturation: Range 0 ï¿½ 10000
+	DWORD 		NegSatur; // Negative Saturation: Range 0 ï¿½ 10000
+	LONG 		DeadBand; // Dead Band: : Range 0 ï¿½ 1000
 } FFB_EFF_COND, *PFFB_EFF_COND;
 
 typedef struct _FFB_EFF_ENVLP {

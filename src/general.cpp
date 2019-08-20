@@ -1,33 +1,24 @@
 #include "general.h"
 #include "utils.h"
 
-napi_value wrap_vJoyEnabled(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::Boolean wrap_vJoyEnabled(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	bool enabled = vJoyEnabled();
 
-	status = napi_get_boolean(env, enabled, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::Boolean::New(env, enabled);
 }
 
-napi_value wrap_GetvJoyVersion(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::Number wrap_GetvJoyVersion(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	short version = GetvJoyVersion();
 
-	status = napi_create_uint32(env, version, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::Number::New(env, (double)version);
 }
 
-napi_value wrap_GetvJoyProductString(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::String wrap_GetvJoyProductString(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	PVOID p_prodString = GetvJoyProductString();
 
@@ -35,15 +26,11 @@ napi_value wrap_GetvJoyProductString(napi_env env, napi_callback_info args) {
 
 	CoTaskMemFree(p_prodString);
 
-	status = napi_create_string_utf8(env, prodString.c_str(), NAPI_AUTO_LENGTH, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::String::New(env, prodString);
 }
 
-napi_value wrap_GetvJoyManufacturerString(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::String wrap_GetvJoyManufacturerString(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	PVOID p_manuString = GetvJoyManufacturerString();
 
@@ -51,15 +38,11 @@ napi_value wrap_GetvJoyManufacturerString(napi_env env, napi_callback_info args)
 
 	CoTaskMemFree(p_manuString);
 
-	status = napi_create_string_utf8(env, manuString.c_str(), NAPI_AUTO_LENGTH, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::String::New(env, manuString);
 }
 
-napi_value wrap_GetvJoySerialNumberString(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::String wrap_GetvJoySerialNumberString(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	PVOID p_serialString = GetvJoySerialNumberString();
 
@@ -67,69 +50,46 @@ napi_value wrap_GetvJoySerialNumberString(napi_env env, napi_callback_info args)
 
 	CoTaskMemFree(p_serialString);
 
-	status = napi_create_string_utf8(env, serialString.c_str(), NAPI_AUTO_LENGTH, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::String::New(env, serialString);
 }
 
-napi_value wrap_DriverMatch(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value var_matches, var_dllversion, var_drvversion, res;
+Napi::Object wrap_DriverMatch(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	WORD DllVersion;
 	WORD DrvVersion;
 
 	bool matches = DriverMatch(&DllVersion, &DrvVersion);
 
-	status = napi_get_boolean(env, matches, &var_matches);
-	if (status != napi_ok) return nullptr;
+	Napi::Boolean var_matches = Napi::Boolean::New(env, matches);
+	Napi::Number var_dllversion = Napi::Number::New(env, (double)DllVersion);
+	Napi::Number var_drvversion = Napi::Number::New(env, (double)DrvVersion);
 
-	status = napi_create_uint32(env, DllVersion, &var_dllversion);
-	if (status != napi_ok) return nullptr;
+	Napi::Object res = Napi::Object::New(env);
 
-	status = napi_create_uint32(env, DrvVersion, &var_drvversion);
-	if (status != napi_ok) return nullptr;
-
-	// Create return object
-	status = napi_create_object(env, &res);
-	if (status != napi_ok) return nullptr;
-
-	// Add return object properties
-	status = napi_set_named_property(env, res, "matches", var_matches);
-	if (status != napi_ok) return nullptr;
-	status = napi_set_named_property(env, res, "dll_version", var_dllversion);
-	if (status != napi_ok) return nullptr;
-	status = napi_set_named_property(env, res, "drv_version", var_drvversion);
-	if (status != napi_ok) return nullptr;
+	res.Set("matches", var_matches);
+	res.Set("dll_version", var_dllversion);
+	res.Set("drv_version", var_drvversion);
 
 	return res;
 }
 
-napi_value wrap_GetvJoyMaxDevices(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::Number wrap_GetvJoyMaxDevices(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	int maxDevices;
 
 	GetvJoyMaxDevices(&maxDevices);
 
-	status = napi_create_uint32(env, maxDevices, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::Number::New(env, (double)maxDevices);
 }
 
-napi_value wrap_GetNumberExistingVJD(napi_env env, napi_callback_info args) {
-	napi_status status;
-	napi_value res;
+Napi::Number wrap_GetNumberExistingVJD(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
 	int existingVJD;
 
 	GetNumberExistingVJD(&existingVJD);
 
-	status = napi_create_uint32(env, existingVJD, &res);
-	if (status != napi_ok) return nullptr;
-
-	return res;
+	return Napi::Number::New(env, (double)existingVJD);
 }

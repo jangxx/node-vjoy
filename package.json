@@ -27,8 +27,17 @@
     "url": "https://github.com/jangxx/node-vjoy/issues"
   },
   "homepage": "https://github.com/jangxx/node-vjoy#readme",
-  "dependencies": {},
-  "engines": { "node": ">=8.0.0" },
-  "os": [ "win32" ],
-  "cpu": [ "x64", "ia32" ]
+  "dependencies": {
+    "node-addon-api": "1.7.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "ia32"
+  ]
 }
