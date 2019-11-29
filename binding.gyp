@@ -7,6 +7,7 @@
 				"src/general.cpp", 
 				"src/device.cpp", 
 				"src/feeding.cpp", 
+				"src/ffb.cpp", 
 				"src/vjoy.cpp" 
 			],
 			"include_dirs": [

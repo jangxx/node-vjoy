@@ -6,6 +6,7 @@
 #include "general.h"
 #include "device.h"
 #include "feeding.h"
+#include "ffb.h"
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports.Set("vJoyEnabled", Napi::Function::New(env, wrap_vJoyEnabled));
@@ -16,7 +17,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports.Set("DriverMatch", Napi::Function::New(env, wrap_DriverMatch));
 	exports.Set("GetvJoyMaxDevices", Napi::Function::New(env, wrap_GetvJoyMaxDevices));
 	exports.Set("GetNumberExistingVJD", Napi::Function::New(env, wrap_GetNumberExistingVJD));
-	// exports.Set("RegisterRemovalCB", Napi::Function::New(env, wrap_RegisterRemovalCB));
+	exports.Set("RegisterRemovalCB", Napi::Function::New(env, wrap_RegisterRemovalCB));
 
 	exports.Set("GetVJDButtonNumber", Napi::Function::New(env, wrap_GetVJDButtonNumber));
 	exports.Set("GetVJDDiscPovNumber", Napi::Function::New(env, wrap_GetVJDDiscPovNumber));
@@ -34,6 +35,10 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 	exports.Set("SetBtn", Napi::Function::New(env, wrap_SetBtn));
 	exports.Set("SetDiscPov", Napi::Function::New(env, wrap_SetDiscPov));
 	exports.Set("SetContPov", Napi::Function::New(env, wrap_SetContPov));
+
+	exports.Set("IsDeviceFfb", Napi::Function::New(env, wrap_IsDeviceFfb));
+	exports.Set("FfbRegisterGenCB", Napi::Function::New(env, wrap_FfbRegisterGenCB));
+	exports.Set("getDeviceFfbEffects", Napi::Function::New(env, getDeviceFfbEffects));
 
 	return exports;
 }

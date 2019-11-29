@@ -1,6 +1,8 @@
 #include "general.h"
 #include "utils.h"
 
+Napi::ThreadSafeFunction removalCB_function = nullptr;
+
 Napi::Boolean wrap_vJoyEnabled(const Napi::CallbackInfo& info) {
 	Napi::Env env = info.Env();
 
@@ -94,33 +96,33 @@ Napi::Number wrap_GetNumberExistingVJD(const Napi::CallbackInfo& info) {
 	return Napi::Number::New(env, (double)existingVJD);
 }
 
-// void ConfChangedCB(BOOL Removed, BOOL First, PVOID data) {
-// 	CallbackInfo* removalCBinfo = (CallbackInfo*)data;
+void ConfChangedCB(BOOL Removed, BOOL First, PVOID _data) {
+	RemovalCBData* data = new RemovalCBData{ Removed == TRUE, First == TRUE };
 
-// 	Napi::Boolean val_removed = Napi::Boolean::New(removalCBinfo->env, Removed == TRUE);
-// 	Napi::Boolean val_first = Napi::Boolean::New(removalCBinfo->env, First == TRUE);
+	removalCB_function.NonBlockingCall(data, [](Napi::Env env, Napi::Function fn, RemovalCBData* data) {
+		Napi::Object evt = Napi::Object::New(env);
+		evt.Set("removed", Napi::Boolean::New(env, data->removed));
+		evt.Set("first", Napi::Boolean::New(env, data->first));
 
-// 	removalCBinfo->fn.Call(removalCBinfo->env.Global(), { val_removed, val_first });
-// }
+		// pass data to JS callback
+		fn.Call( {evt} );
 
-// // This function leaks memory if called more than once which is why it's not exposed to the users
-// void wrap_RegisterRemovalCB(const Napi::CallbackInfo& info) {
-// 	Napi::Env env = info.Env();
+		delete data; // clean up
+	});
+}
 
-// 	if (!info[0].IsFunction()) {
-// 		Napi::Error::New(env, "The first parameter needs to be a function").ThrowAsJavaScriptException();
-// 		return;
-// 	}
+// This function leaks memory if called more than once which is why it's not exposed to the users
+void wrap_RegisterRemovalCB(const Napi::CallbackInfo& info) {
+	Napi::Env env = info.Env();
 
-// 	Napi::Function callback = info[0].As<Napi::Function>();
+	if (!info[0].IsFunction()) {
+		Napi::Error::New(env, "The first parameter needs to be a function").ThrowAsJavaScriptException();
+		return;
+	}
 
-// 	Napi::EscapableHandleScope scope = Napi::EscapableHandleScope(env);
-// 	scope.Escape(env);
+	Napi::Function callback = info[0].As<Napi::Function>();
+	removalCB_function = Napi::ThreadSafeFunction::New(env, callback, "removalCB", 0, 1);
 
-// 	CallbackInfo* removalCBinfo = new CallbackInfo();
-// 	removalCBinfo->fn = callback;
-// 	removalCBinfo->env = env;
-
-// 	RegisterRemovalCB(&ConfChangedCB, removalCBinfo);
-// }
+	RegisterRemovalCB(&ConfChangedCB, nullptr);
+}
 

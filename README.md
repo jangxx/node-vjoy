@@ -68,6 +68,17 @@ Returns the maximum number of devices.
 **vJoy.existingDevices**()  
 Returns the current number of enabled devices.
 
+**vJoy.registerRemovalCB**(callback)  
+Registers a function to be called every time a virtual controller is added or removed. 
+Will be called with `{ removed: bool, first: bool }`.
+The meaning of the parameters is explained in the SDK README:
+- When the removal process begins, `removed = true` and `first = true`
+- When the removal process is finished, `removed = true` and `first = false`
+- When the arrival process begins, `removed = false` and `first = true`
+- When the arrival process is finished, `removed = false` and `first = false`
+
+Note: You can only register a single callback. Subsequent calls overwrite the previously set callbacks.
+
 **vJoy.axes**  
 A static array of the names of the axes. Contains: `[ "X", "Y", "Z", "Rx", "Ry", "Rz", "Slider0", "Slider1", "Wheel", "POV" ]`
 

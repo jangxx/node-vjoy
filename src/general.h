@@ -5,10 +5,10 @@
 #include "../include/public.h"
 #include "../include/vjoyinterface.h"
 
-// struct CallbackInfo {
-// 	Napi::Function fn = Napi::Function();
-// 	Napi::Env env = nullptr;
-// };
+typedef struct {
+	bool removed;
+	bool first;
+} RemovalCBData;
 
 Napi::Boolean wrap_vJoyEnabled(const Napi::CallbackInfo& info);
 
@@ -26,4 +26,4 @@ Napi::Number wrap_GetvJoyMaxDevices(const Napi::CallbackInfo& info);
 
 Napi::Number wrap_GetNumberExistingVJD(const Napi::CallbackInfo& info);
 
-// void wrap_RegisterRemovalCB(const Napi::CallbackInfo& info);
+void wrap_RegisterRemovalCB(const Napi::CallbackInfo& info);
