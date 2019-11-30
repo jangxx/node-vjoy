@@ -26,12 +26,10 @@ for (let effect in effects) {
 	console.log(`    ${effect}: ${effects[effect]}`);
 }
 
-// const vjoy_native = require('../build/Release/vjoy');
-// vjoy_native.FfbRegisterGenCB((id, evt) => console.log(id, evt));
-
 device.enableFFBEvents();
 
 console.log("Captured events:");
+console.log("----------------");
 
 device.on("ffb", evt => {
 	console.log(`Event ${evt.type}`);
@@ -43,11 +41,11 @@ device.on("ffb", evt => {
 		}
 	}
 
-	if (evt.ebi != -1) {
+	if (evt.ebi != null) {
 		console.log(`    Effect Block Index: ${evt.ebi}`);
 	}
 
-	if (evt.gain != 0) {
+	if (evt.gain != null) {
 		console.log(`    Gain: ${evt.gain}`);
 	}
 

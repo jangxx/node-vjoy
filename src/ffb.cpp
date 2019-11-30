@@ -109,6 +109,7 @@ Napi::Value wrap_Ffb_h_EffOp(Napi::Env env, const FFB_DATA* packet) {
 	Napi::Object ret = Napi::Object::New(env);
 	ret.Set("effectBlockIndex", Napi::Number::New(env, (double)effect.EffectBlockIndex));
 	ret.Set("effectOp", Napi::String::New(env, ffbOpStrings.at(effect.EffectOp)));
+	ret.Set("effectOp_n", Napi::Number::New(env, (double)effect.EffectOp));
 	ret.Set("loopCount", Napi::Number::New(env, effect.LoopCount));
 
 	return ret;
@@ -200,6 +201,7 @@ void FFBcallback(PVOID FfbPacket, PVOID userdata) {
 
 		if (result == ERROR_SUCCESS) {
 			evt.Set("type", Napi::String::New(env, ffbpTypeStrings.at(type)));
+			evt.Set("type_n", Napi::Number::New(env, (double)type));
 
 			switch (type) {
 				case PT_EFFREP:
@@ -220,29 +222,43 @@ void FFBcallback(PVOID FfbPacket, PVOID userdata) {
 				case PT_ENVREP:
 					evt.Set("effect", wrap_Ffb_h_Eff_Envlp(env, data));
 					break;
+				case PT_CONSTREP:
+					evt.Set("effect", wrap_Ffb_h_Eff_Constant(env, data));
+					break;
 				default:
 					evt.Set("effect", env.Null());
 					break;
 			}
 		} else {
 			evt.Set("type", env.Null());
+			evt.Set("type_n", env.Null());
 			evt.Set("effect", env.Null());
 		}
 
 		int effectBlockIndex = -1;
 		result = Ffb_h_EBI(data, &effectBlockIndex);
-		evt.Set("ebi", Napi::Number::New(env, (double)effectBlockIndex));
+		if (result == ERROR_SUCCESS) {
+			evt.Set("ebi", Napi::Number::New(env, (double)effectBlockIndex));
+		} else {
+			evt.Set("ebi", env.Null());
+		}
 
 		BYTE gain = 0;
 		result = Ffb_h_DevGain(data, &gain);
-		evt.Set("gain", Napi::Number::New(env, (double)gain));
+		if (result == ERROR_SUCCESS) {
+			evt.Set("gain", Napi::Number::New(env, (double)gain));
+		} else {
+			evt.Set("gain", env.Null());
+		}
 
 		FFB_CTRL control;
 		result = Ffb_h_DevCtrl(data, &control);
 		if (result == ERROR_SUCCESS) {
 			evt.Set("control", Napi::String::New(env, ffbCtrlStrings.at(control)));
+			evt.Set("control", Napi::Number::New(env, (double)control));
 		} else {
 			evt.Set("control", env.Null());
+			evt.Set("control_n", env.Null());
 		}
 
 		// pass data to JS callback

@@ -77,7 +77,7 @@ The meaning of the parameters is explained in the SDK README:
 - When the arrival process begins, `removed = false` and `first = true`
 - When the arrival process is finished, `removed = false` and `first = false`
 
-Note: You can only register a single callback. Subsequent calls overwrite the previously set callbacks.
+Note: You can only register a single callback. Subsequent calls overwrite the previously set callbacks. 
 
 **vJoy.axes**  
 A static array of the names of the axes. Contains: `[ "X", "Y", "Z", "Rx", "Ry", "Rz", "Slider0", "Slider1", "Wheel", "POV" ]`
@@ -103,6 +103,12 @@ Queries the driver for the status of the device. Returns one of the following va
 "unknown": Something went wrong.
 ```
 
+**vJoyDevice.ffbSupported**(id)  
+Checks if the device with the specified id supports Force Feedback.
+
+**vJoyDevice.getFFBEffects**(id)  
+Returns an object listing support for the various effect types.
+
 **constructor**(id)  
 Creates a new device instance with the supplied id.
 
@@ -125,6 +131,12 @@ An object mapping POV ids to `vJoyContinuousPOV` objects. Contains all the curre
 *get* **axes**  
 An object mapping axis ids (from `vJoy.axes`) to `vJoyAxis` objects, or `null` if the axis is not configured.
 
+*get* **ffbSupported**  
+Contains the Force Feedback support status.
+
+*get* **ffbEffects**  
+Contains an object listing support for the various effect types.
+
 **initialize**()  
 Tries to acquire the device. Updates the internal initialized status and returns `true` if the device was acquired.
 
@@ -137,6 +149,34 @@ Resets all buttons to an unpressed state.
 
 **free**()  
 Relinquishes the device. **THIS NEEDS TO BE CALLED WHEN YOU DON'T NEED THE DEVICE ANYMORE, OTHERWISE NO OTHER PROCESS CAN ACQUIRE IT**.
+
+**enableFFBEvents**()  
+Enables the emission of Force Feedback events.
+Note: After this method has been called on any device, the Node process will not exit on its own anymore, since a event listener has been registered with the driver.
+
+**disableFFBEvents**()  
+Disabled the emission of Force Feedback events.
+This will not unregister the event listener from the driver however (since that is impossible), so you still need to quit your program explicitly.
+
+### Events
+
+Event "**ffb**"  
+This is event will only be emitted after `enableFFBEvents()` has been called on a device.
+The emitted object has the format
+```
+{
+	type: String
+	type_n: Number,
+	effect: Object,
+	ebi: Number,
+	gain: Number,
+	control: String,
+	control_n: Number
+}
+```
+Each of the values can also be `null`, in case the respective value was not found in the effect packet sent by the driver.
+Every field ending in `_n` is just the numerical representation of a string field with the same name.
+A complete overview over the different effect types and the data contained within them is outside the scope of this README and can be found in the documentation of the vJoy SDK.
 
 ## vJoyButton, vJoyDiscretePOV, vJoyContinuousPOV, vJoyAxis
 
