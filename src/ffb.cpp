@@ -193,7 +193,7 @@ void FFBcallback(PVOID FfbPacket, PVOID userdata) {
 
 		Napi::Object evt = Napi::Object::New(env);
 
-		int deviceID = -1;
+		UINT deviceID = 0;
 		DWORD result = Ffb_h_DeviceID(data, &deviceID);
 
 		FFBPType type;
@@ -235,7 +235,7 @@ void FFBcallback(PVOID FfbPacket, PVOID userdata) {
 			evt.Set("effect", env.Null());
 		}
 
-		int effectBlockIndex = -1;
+		UINT effectBlockIndex = 0;
 		result = Ffb_h_EBI(data, &effectBlockIndex);
 		if (result == ERROR_SUCCESS) {
 			evt.Set("ebi", Napi::Number::New(env, (double)effectBlockIndex));

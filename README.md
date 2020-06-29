@@ -1,6 +1,6 @@
 # vJoy Bindings for Node.js
 
-**ATTENTION**: The module will always check if the SDK and installed driver versions match and issue a warning if they don't. Unfortunately, the SDK has not been updated to the latest version at the time of this writing, so you will always see a warning.
+**ATTENTION**: The module is built against the SDK shipped with a [fork of the original vJoy](https://github.com/njz3/vJoy). The newer SDK should be backwards compatible, but you will always see an error message if you're running the old official version 2.1.9.
 
 # Installation
 

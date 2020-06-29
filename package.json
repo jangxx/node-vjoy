@@ -1,6 +1,6 @@
 {
   "name": "vjoy",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Native Node bindings for the vjoy virtual joystick driver",
   "main": "index.js",
   "directories": {
@@ -18,7 +18,9 @@
   "keywords": [
     "vjoy",
     "bindings",
-    "native"
+    "native",
+    "virtual",
+    "gamepad"
   ],
   "author": "jangxx <jangxx@protonmail.com>",
   "license": "MIT",
