@@ -3,7 +3,7 @@
 **ATTENTION**: The module is built against the SDK shipped with a [fork of the original vJoy](https://github.com/njz3/vJoy). The newer SDK should be backwards compatible, but you will always see an error message if you're running the old official version 2.1.9.
 
 If you want to simulate an XInput device (e.g. an Xbox controller), vJoy is probably not right the right solution for you, since it creates DirectInput controllers, which are incompatible with most modern games.
-I suggest you take a look at [ViGEmBus](https://github.com/ViGEm/ViGEmBus) and the accompanying [node-ViGEmBus](https://github.com/jangxx/node-ViGEmClient) library instead, which can be used to create virtual Xinput devices.
+I suggest you take a look at [ViGEmBus](https://github.com/ViGEm/ViGEmBus) and the accompanying [node-ViGEmClient](https://github.com/jangxx/node-ViGEmClient) library instead, which can be used to create virtual Xinput devices.
 
 # Installation
 
