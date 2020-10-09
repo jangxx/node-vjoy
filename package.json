@@ -1,6 +1,6 @@
 {
   "name": "vjoy",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Native Node bindings for the vjoy virtual joystick driver",
   "main": "index.js",
   "directories": {

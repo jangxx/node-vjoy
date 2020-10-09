@@ -236,7 +236,13 @@ void FFBcallback(PVOID FfbPacket, PVOID userdata) {
 		}
 
 		UINT effectBlockIndex = 0;
+
+#if VER_X_ >= 2 && VER_H_ >= 2
+		result = Ffb_h_EffectBlockIndex(data, &effectBlockIndex);
+#else
 		result = Ffb_h_EBI(data, &effectBlockIndex);
+#endif
+
 		if (result == ERROR_SUCCESS) {
 			evt.Set("ebi", Napi::Number::New(env, (double)effectBlockIndex));
 		} else {
