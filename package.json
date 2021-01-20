@@ -1,6 +1,6 @@
 {
   "name": "vjoy",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Native Node bindings for the vjoy virtual joystick driver",
   "main": "index.js",
   "directories": {
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/jangxx/node-vjoy#readme",
   "dependencies": {
-    "node-addon-api": "^2.0.0"
+    "node-addon-api": "^2.0.2"
   },
   "engines": {
     "node": ">=8.0.0"
