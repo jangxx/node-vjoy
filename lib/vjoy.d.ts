@@ -1,0 +1,11 @@
+declare const AXES: readonly string[];
+export function registerRemovalCB(callback: any): void;
+export declare const isEnabled: any;
+export declare const version: any;
+export declare const productString: any;
+export declare const manufacturerString: any;
+export declare const serialString: any;
+export declare const driverMatch: any;
+export declare const maxDevices: any;
+export declare const existingDevices: any;
+export { AXES as axes };
