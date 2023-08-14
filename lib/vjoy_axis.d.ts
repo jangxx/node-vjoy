@@ -1,15 +1,11 @@
-export = vJoyAxis;
+import vJoyDevice from "./vjoy_device";
+
 declare class vJoyAxis {
-    constructor(parent: any, axisId: any);
-    _parent: any;
-    _id: any;
-    _value: number;
-    get id(): any;
+    constructor(parent: vJoyDevice, axisId: string);
+
+    get id(): string;
     get value(): number;
-    /**
-     * Reset the internal value of the POV abstraction
-     */
-    _reset(): void;
+
     /**
      * Set the value of the axis between 1 and 32769 (0x8000)
      * @param {Number} value
@@ -17,3 +13,5 @@ declare class vJoyAxis {
      */
     set(value: number): boolean;
 }
+
+export = vJoyAxis;

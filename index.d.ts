@@ -1,6 +1,4 @@
+import vJoyDevice from "./lib/vjoy_device";
 
-
-declare module vjoy {
-    export const vJoy: any;
-    export const vJoyDevice: any;
-}
+export { vJoyDevice };
+export { vJoy } from "./lib/vjoy";

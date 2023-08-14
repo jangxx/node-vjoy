@@ -1,11 +1,16 @@
-export = vJoyDevice;
+import vJoyButton from "./vjoy_button";
+import vJoyContinuousPOV from "./vjoy_cont_pov";
+import vJoyDiscretePOV from "./vjoy_disc_pov";
+import { AxisName } from "./vjoy";
+import vJoyAxis from "./vjoy_axis";
+
 declare class vJoyDevice {
     /**
      * Convenience method to create and initialize a new vJoyDevice
      * @param {Number} id
      * @return {vJoyDevice}
      */
-    static create(id: number): vJoyDevice;
+    static create(id: number): vJoyDevice | null;
     /**
      * Check if a vJoy device id exists
      * @param {Number} id
@@ -17,7 +22,7 @@ declare class vJoyDevice {
      * @param {Number} id
      * @returns {String}
      */
-    static status(id: number): string;
+    static status(id: number): "busy" | "missing" | "free" | "acquired" | "unknown";
     /**
      * Check if a vJoy device supports Force Feedback
      * @param {Number} id
@@ -29,23 +34,19 @@ declare class vJoyDevice {
      * @param {Number} id
      * @returns {Object}
      */
-    static getFFBEffects(id: number): any;
+    static getFFBEffects(id: number): object;
+
     constructor(id: any);
-    _id: any;
-    _initialized: boolean;
-    _axes: {};
-    _buttons: {};
-    _discretePOV: {};
-    _continuousPOV: {};
-    get id(): any;
+    get id(): number;
     get initialized(): boolean;
-    get buttons(): Readonly<{}>;
-    get discretePOV(): Readonly<{}>;
-    get continuousPOV(): Readonly<{}>;
-    get axes(): Readonly<{}>;
+    get buttons(): Readonly<Record<number, vJoyButton>>;
+    get discretePOV(): Readonly<Record<number, vJoyDiscretePOV>>;
+    get continuousPOV(): Readonly<Record<number, vJoyContinuousPOV>>;
+    get axes(): Readonly<Record<AxisName, vJoyAxis>>;
     get status(): string;
     get ffbSupported(): boolean;
     get ffbEffects(): any;
+
     /**
      * Initializes the device by checking its status and acquriring it if possible.
      * Returns true if the initialization was successful.
@@ -65,7 +66,7 @@ declare class vJoyDevice {
     /**
      * Relinquishes the device. Do not forget to relinquish a device if you want other feeders to access it.
      */
-    free(): any;
+    free(): void;
     /**
      * Enables the emission of Force Feedback events
      */
@@ -75,3 +76,5 @@ declare class vJoyDevice {
      */
     disableFFBEvents(): void;
 }
+
+export = vJoyDevice;

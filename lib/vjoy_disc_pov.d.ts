@@ -1,15 +1,11 @@
-export = vJoyDiscretePOV;
+import vJoyDevice from "./vjoy_device";
+
 declare class vJoyDiscretePOV {
-    constructor(parent: any, povId: any);
-    _parent: any;
-    _id: any;
-    _value: number;
-    get id(): any;
+    constructor(parent: vJoyDevice, povId: number);
+
+    get id(): number;
     get value(): number;
-    /**
-     * Reset the internal value of the POV abstraction
-     */
-    _reset(): void;
+
     /**
      * Set the direction of the POV switch.
      * 0 = Up
@@ -22,3 +18,5 @@ declare class vJoyDiscretePOV {
      */
     set(value: number): boolean;
 }
+
+export = vJoyDiscretePOV;
